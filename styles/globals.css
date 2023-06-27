@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Vegan Style';
+  src: url('../public/fonts/VeganStylePersonalUse-5Y58.ttf') format('truetype');
+  /* Add additional font properties if needed */
+}
+
+
 html,
 body {
   padding: 0;
