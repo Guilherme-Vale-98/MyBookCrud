@@ -1,14 +1,12 @@
 import  styled  from "styled-components";
 
 export const StyledHeader = styled.header`
-width: full;
 height: 12vh;
 background-color: #0077b6;
 display: flex;
 align-items: center;
 `
 export const LogoContainer = styled.div`
-    width: full;
     height:10vh;
     display:flex;
     align-items: center;
@@ -16,6 +14,7 @@ export const LogoContainer = styled.div`
 
 export const LogoText = styled.div`
 font-size: 6vmin;
+color: #4CAF50;
 display:block;
 font-family: "Vegan Style";
 `

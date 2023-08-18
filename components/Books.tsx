@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { BooksContainer } from '../styles/BooksStyle';
 
 type Genre =
   | 'FICTION'
@@ -35,7 +36,8 @@ type Author ={
 type Book = {
     id: Number;
     title: String;
-    author: Author[];
+    genre: String;
+    authors: Author[];
 }
 
 type Props = {}
@@ -66,10 +68,26 @@ const Books = (props: Props) => {
         [])
 
   return (
-    <div>
-       {books.map(book => <div>{book.title}</div>)}
-    </div>
-    
+    <BooksContainer>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Actions</th>
+                </tr>
+                   {books.map(book =>(
+                   <tr key={String(book.id)}>
+                    <td>{book.title}</td>
+                    <td>{book.authors.map(author=>author.name)}, {book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)}</td>
+                    <td>{book.genre}</td>
+                    <td>actions</td>
+                   </tr>
+                   ))}
+            </tbody>
+        </table>
+    </BooksContainer>
   )
 }
 
