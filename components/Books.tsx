@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { BooksContainer } from '../styles/BooksStyle';
+import editSvg from '../public/images/edit.svg'
+import deleteSvg from '../public/images/delete.svg'
+import Button from './Button';
 
 type Genre =
   | 'FICTION'
@@ -36,7 +39,7 @@ type Author ={
 type Book = {
     id: Number;
     title: String;
-    genre: String;
+    genre: Genre;
     authors: Author[];
 }
 
@@ -44,6 +47,17 @@ type Props = {}
 
 const Books = (props: Props) => {
     const [books, setBooks] = useState<Book[]>([]);
+
+     const handleDelete = async (id:Number) => {
+        try{
+            const response = await fetch(`http://localhost:8080/api/v1/books/${id}`
+            , {
+                method: 'DELETE',
+        })
+        }catch(error){
+            console.error("error deleting books:", error);
+        }
+    }
 
     useEffect(() =>{
         const fetchData = async () => {
@@ -80,9 +94,9 @@ const Books = (props: Props) => {
                    {books.map(book =>(
                    <tr key={String(book.id)}>
                     <td>{book.title}</td>
-                    <td>{book.authors.map(author=>author.name)}, {book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)},{book.authors.map(author=>author.name)}</td>
+                    <td>{book.authors.map(author=>author.name)}</td>
                     <td>{book.genre}</td>
-                    <td>actions</td>
+                    <td><Button id={book.id} handleClick={handleDelete} image={deleteSvg}/></td>
                    </tr>
                    ))}
             </tbody>

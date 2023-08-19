@@ -13,6 +13,10 @@ export const BooksContainer = styled.div`
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
+    td:nth-child(4) {
+        background-color: #f2f;
+        width: 40rem;
+    }
     td {
         border: 2px solid red;
         text-align: left;
