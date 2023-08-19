@@ -54,6 +54,7 @@ const Books = (props: Props) => {
             , {
                 method: 'DELETE',
         })
+            setBooks(books.filter((book,index,arr)=> book.id !== id))
         }catch(error){
             console.error("error deleting books:", error);
         }
