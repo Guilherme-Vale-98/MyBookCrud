@@ -48,7 +48,7 @@ type Props = {}
 const Books = (props: Props) => {
     const [books, setBooks] = useState<Book[]>([]);
 
-     const handleDelete = async (id:Number) => {
+      const handleDelete = async (id:Number) => {
         try{
             const response = await fetch(`http://localhost:8080/api/v1/books/${id}`
             , {
@@ -97,7 +97,11 @@ const Books = (props: Props) => {
                     <td>{book.title}</td>
                     <td>{book.authors.map(author=>author.name)}</td>
                     <td>{book.genre}</td>
-                    <td><Button id={book.id} handleClick={handleDelete} image={deleteSvg}/></td>
+                    <td>
+                        <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
+                        <Button id={book.id} handleClick={handleDelete} image={editSvg}/>
+                    </td>
+                    
                    </tr>
                    ))}
             </tbody>

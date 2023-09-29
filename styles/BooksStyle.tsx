@@ -1,7 +1,6 @@
 import  styled  from "styled-components";
 
 export const BooksContainer = styled.div`
-    border: 2px solid red;
     margin: 0 12rem;
     display:flex;
     align-items: center;
@@ -14,8 +13,10 @@ export const BooksContainer = styled.div`
         background-color: #f2f2f2;
     }
     td:nth-child(4) {
-        background-color: #f2f;
         width: 40rem;
+        button:nth-child(2){
+            background-color: #E91916;
+        }
     }
     td {
         border: 2px solid red;

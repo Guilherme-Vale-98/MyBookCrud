@@ -9,7 +9,7 @@ type Props = {
 
 const Button = (props:Props) => {
   return (
-    <button onClick={() => props.handleClick(props.id)}><Image priority src={props.image} alt="Follow us on Twitter"/></button>   
+    <button onClick={()=> props.handleClick(props.id)}><Image priority src={props.image} alt="Follow us on Twitter"/></button>   
   )
 }
 
