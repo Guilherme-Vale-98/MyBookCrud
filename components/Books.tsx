@@ -5,39 +5,42 @@ import deleteSvg from '../public/images/delete.svg'
 import Button from './Button';
 import Form from './Form';
 
-export type Genre =
-  | 'FICTION'
-  | 'MYSTERY'
-  | 'ROMANCE'
-  | 'SCIENCE_FICTION'
-  | 'FANTASY'
-  | 'HORROR'
-  | 'THRILLER'
-  | 'HISTORICAL_FICTION'
-  | 'BIOGRAPHY'
-  | 'SELF_HELP'
-  | 'POETRY'
-  | 'DRAMA'
-  | 'CRIME'
-  | 'ADVENTURE'
-  | 'COMEDY'
-  | 'ACTION'
-  | 'CHILDREN'
-  | 'YOUNG_ADULT'
-  | 'HISTORY'
-  | 'PHILOSOPHY'
-  | 'TRAVEL'
-  | 'SCIENCE'
-  | 'BUSINESS'
-  | 'ART'
-  | 'COOKING';
+export enum Genre {
+    FICTION = 'FICTION',
+    MYSTERY = 'MYSTERY',
+    ROMANCE = 'ROMANCE',
+    SCIENCE_FICTION = 'SCIENCE_FICTION',
+    FANTASY = 'FANTASY',
+    HORROR = 'HORROR',
+    THRILLER = 'THRILLER',
+    HISTORICAL_FICTION = 'HISTORICAL_FICTION',
+    BIOGRAPHY = 'BIOGRAPHY',
+    SELF_HELP = 'SELF_HELP',
+    POETRY = 'POETRY',
+    DRAMA = 'DRAMA',
+    CRIME = 'CRIME',
+    ADVENTURE = 'ADVENTURE',
+    COMEDY = 'COMEDY',
+    ACTION = 'ACTION',
+    CHILDREN = 'CHILDREN',
+    YOUNG_ADULT = 'YOUNG_ADULT',
+    HISTORY = 'HISTORY',
+    PHILOSOPHY = 'PHILOSOPHY',
+    TRAVEL = 'TRAVEL',
+    SCIENCE = 'SCIENCE',
+    BUSINESS = 'BUSINESS',
+    ART = 'ART',
+    COOKING = 'COOKING',
+  }
 
+
+  
 type Author ={
     id: Number,
     name: String
 }
 
-type Book = {
+export type Book = {
     id: Number;
     title: String;
     genre: Genre;
@@ -90,7 +93,7 @@ const Books = (props: Props) => {
 
   return (
     <BooksContainer>
-        {toggleForm? <Form></Form>:(<table>
+        {toggleForm? <Form setToggleForm={setToggleForm}></Form>:(<table>
             <tbody>
                 <tr>
                     <th>Title</th>
@@ -105,7 +108,7 @@ const Books = (props: Props) => {
                     <td>{book.genre}</td>
                     <td>
                         <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
-                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
+                        <Button id={book.id} handleClick={handleEdit}  image={editSvg}/>
                         <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
                         <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
                     </td>
