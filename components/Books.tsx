@@ -3,8 +3,9 @@ import { BooksContainer } from '../styles/BooksStyle';
 import editSvg from '../public/images/edit.svg'
 import deleteSvg from '../public/images/delete.svg'
 import Button from './Button';
+import Form from './Form';
 
-type Genre =
+export type Genre =
   | 'FICTION'
   | 'MYSTERY'
   | 'ROMANCE'
@@ -47,6 +48,11 @@ type Props = {}
 
 const Books = (props: Props) => {
     const [books, setBooks] = useState<Book[]>([]);
+    const [toggleForm, setToggleForm] = useState<Boolean>(false)
+
+    const handleEdit = async () => {
+        setToggleForm(true)
+    }
 
       const handleDelete = async (id:Number) => {
         try{
@@ -84,7 +90,7 @@ const Books = (props: Props) => {
 
   return (
     <BooksContainer>
-        <table>
+        {toggleForm? <Form></Form>:(<table>
             <tbody>
                 <tr>
                     <th>Title</th>
@@ -99,13 +105,15 @@ const Books = (props: Props) => {
                     <td>{book.genre}</td>
                     <td>
                         <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
-                        <Button id={book.id} handleClick={handleDelete} image={editSvg}/>
+                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
+                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
+                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
                     </td>
                     
                    </tr>
                    ))}
             </tbody>
-        </table>
+        </table>)}
     </BooksContainer>
   )
 }

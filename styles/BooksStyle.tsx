@@ -5,7 +5,7 @@ export const BooksContainer = styled.div`
     display:flex;
     align-items: center;
     th{
-        font-size: 4vmin;
+        font-size: 3rem;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         color: #435D7D;
     }
@@ -14,7 +14,11 @@ export const BooksContainer = styled.div`
     }
     td:nth-child(4) {
         width: 40rem;
-        button:nth-child(2){
+        padding: 10px;
+        button{
+        
+        }
+        button:nth-child(1){
             background-color: #E91916;
         }
     }
