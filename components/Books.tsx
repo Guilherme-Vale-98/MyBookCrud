@@ -38,7 +38,7 @@ export enum Genre {
   
 type Author ={
     id: Number,
-    name: String
+    name: string
 }
 
 export type Book = {
@@ -53,13 +53,13 @@ type Props = {}
 const Books = (props: Props) => {
     const [books, setBooks] = useState<Book[]>([]);
     const [toggleForm, setToggleForm] = useState<Boolean>(false);
-    const [selectedid, setSelectedid] = useState<number>(0)
+    const [selectedBook, setSelectedBook] = useState<Book>(null)
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const handleEdit = async (id: number) => {
+    const handleEdit = async (book: Book) => {
         setToggleForm(true);
-        setSelectedid(id);
+        setSelectedBook(book);
     }
 
       const handleDelete = async (id:number) => {
@@ -68,7 +68,7 @@ const Books = (props: Props) => {
             , {
                 method: 'DELETE',
         })
-            setBooks(books.filter((book,index,arr)=> book.id !== id))
+            setBooks(books.filter((book)=> book.id !== id))
         }catch(error){
             console.error("error deleting books:", error);
         }
@@ -99,49 +99,52 @@ const Books = (props: Props) => {
     },
         [])
 
-    const renderBooks = ()=>{
-        if(isLoading){
-            return (<Spinner></Spinner>)
+        const renderBooks = ()=>{
+            if(isLoading){
+                return (<Spinner></Spinner>)
+            }
+    
+            if(errorMessage){
+                return (<h2>{errorMessage}</h2>)
+            }
+
+            if(toggleForm){
+                return(
+                    <Form book={selectedBook} setToggleForm={setToggleForm}></Form>
+                )
+            }
+
+            return(
+               <BooksContainer><table>
+                <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Actions</th>
+                    </tr>
+                       {books.map(book =>(
+                       <tr key={String(book.id)}>
+                        <td>{book.title}</td>
+                        <td>{book.authors.map(author => author.name + ', ' )}</td>
+                        <td>{book.genre}</td>
+                        <td>
+                            <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
+                            <Button id={book.id} handleClick={() => handleEdit(book)}  image={editSvg}/>
+                        </td>                    
+                       </tr>
+                       ))}
+                </tbody>
+            </table>
+            </BooksContainer>
+            )
         }
-
-        if(errorMessage){
-            return (<h2>{errorMessage}</h2>)
-        }
-
-        return(
-           <BooksContainer><table>
-            <tbody>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Genre</th>
-                    <th>Actions</th>
-                </tr>
-                   {books.map(book =>(
-                   <tr key={String(book.id)}>
-                    <td>{book.title}</td>
-                    <td>{book.authors.map(author => author.name + ', ' )}</td>
-                    <td>{book.genre}</td>
-                    <td>
-                        <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
-                        <Button id={book.id} handleClick={handleEdit}  image={editSvg}/>
-                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
-                        <Button id={book.id} handleClick={handleEdit} image={editSvg}/>
-                    </td>
-                    
-                   </tr>
-                   ))}
-            </tbody>
-        </table>
-        </BooksContainer>
-        )
-    }
-
-  return ( 
-    <>  
-        {renderBooks()}
-    </>
-  )
+    
+      return ( 
+        <>  
+            {renderBooks()}
+        </>
+      )
 }
 
 export default Books

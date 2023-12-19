@@ -1,7 +1,7 @@
 // Your Form.tsx component
 import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { Genre } from './Books';
+import { Book, Genre } from './Books';
 import { FormWrapper, Label, Input, Button, Select, CancelButton } from '../styles/FormStyles'; // Import the styled components
 
 interface IFormInput {
@@ -12,7 +12,7 @@ interface IFormInput {
 
 type Props = {
   setToggleForm: React.Dispatch<React.SetStateAction<Boolean>>,
-  id: number
+  book: Book
 };
 
 const formatEnumOption = (option: string) => {
@@ -23,7 +23,6 @@ const Form = (props: Props) => {
   const { control, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    // Split the authors string by commas and trim the names
     const authorsArray = data.authors
       .split(',')
       .map((author) => author.trim())
@@ -45,7 +44,7 @@ const Form = (props: Props) => {
         <Controller
           name="title"
           control={control}
-          defaultValue={`${props.id}`}
+          defaultValue={`${props.book.title}`}
           render={({ field }) => <Input {...field} />}
         />
 
@@ -53,7 +52,7 @@ const Form = (props: Props) => {
         <Controller
           name="genre"
           control={control}
-          defaultValue={Genre.FICTION}
+          defaultValue={props.book.genre}
           render={({ field }) => (
             <Select {...field}>
               {Object.values(Genre).map((genre) => (
@@ -69,7 +68,7 @@ const Form = (props: Props) => {
         <Controller
           name="authors"
           control={control}
-          defaultValue=""
+          defaultValue={props.book.authors[0].name}
           render={({ field }) => <Input {...field} />}
         />
 
