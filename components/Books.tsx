@@ -4,6 +4,7 @@ import editSvg from '../public/images/edit.svg'
 import deleteSvg from '../public/images/delete.svg'
 import Button from './Button';
 import Form from './Form';
+import Spinner from './Spinner';
 
 export enum Genre {
     FICTION = 'FICTION',
@@ -41,7 +42,7 @@ type Author ={
 }
 
 export type Book = {
-    id: Number;
+    id: number;
     title: String;
     genre: Genre;
     authors: Author[];
@@ -51,13 +52,17 @@ type Props = {}
 
 const Books = (props: Props) => {
     const [books, setBooks] = useState<Book[]>([]);
-    const [toggleForm, setToggleForm] = useState<Boolean>(false)
+    const [toggleForm, setToggleForm] = useState<Boolean>(false);
+    const [selectedid, setSelectedid] = useState<number>(0)
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleEdit = async () => {
-        setToggleForm(true)
+    const handleEdit = async (id: number) => {
+        setToggleForm(true);
+        setSelectedid(id);
     }
 
-      const handleDelete = async (id:Number) => {
+      const handleDelete = async (id:number) => {
         try{
             const response = await fetch(`http://localhost:8080/api/v1/books/${id}`
             , {
@@ -71,6 +76,7 @@ const Books = (props: Props) => {
 
     useEffect(() =>{
         const fetchData = async () => {
+            setIsLoading(true);
             try{
                 const response = await fetch("http://localhost:8080/api/v1/books"
                 , {
@@ -81,9 +87,11 @@ const Books = (props: Props) => {
             })
                 const data = await response.json();
                 setBooks(data);
-                console.log(data)
+                setIsLoading(false);
+                console.log(data);
             }catch(error){
-                console.error("error fetching books:", error);
+                setErrorMessage("Unable to get book list!");
+                setIsLoading(false);
             }
         };
 
@@ -91,9 +99,17 @@ const Books = (props: Props) => {
     },
         [])
 
-  return (
-    <BooksContainer>
-        {toggleForm? <Form setToggleForm={setToggleForm}></Form>:(<table>
+    const renderBooks = ()=>{
+        if(isLoading){
+            return (<Spinner></Spinner>)
+        }
+
+        if(errorMessage){
+            return (<h2>{errorMessage}</h2>)
+        }
+
+        return(
+           <BooksContainer><table>
             <tbody>
                 <tr>
                     <th>Title</th>
@@ -104,7 +120,7 @@ const Books = (props: Props) => {
                    {books.map(book =>(
                    <tr key={String(book.id)}>
                     <td>{book.title}</td>
-                    <td>{book.authors.map(author=>author.name)}</td>
+                    <td>{book.authors.map(author => author.name + ', ' )}</td>
                     <td>{book.genre}</td>
                     <td>
                         <Button id={book.id} handleClick={handleDelete} image={deleteSvg}/>
@@ -116,8 +132,15 @@ const Books = (props: Props) => {
                    </tr>
                    ))}
             </tbody>
-        </table>)}
-    </BooksContainer>
+        </table>
+        </BooksContainer>
+        )
+    }
+
+  return ( 
+    <>  
+        {renderBooks()}
+    </>
   )
 }
 

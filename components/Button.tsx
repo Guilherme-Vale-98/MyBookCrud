@@ -1,10 +1,11 @@
 import React from 'react'
 import Image from 'next/image';
+import { Book } from './Books';
 
 type Props = {
   image: any,
-  id: Number;
-  handleClick: (id:Number) => void
+  id: number;
+  handleClick: (id:number) => void;
 }
 
 const Button = (props:Props) => {
@@ -13,4 +14,4 @@ const Button = (props:Props) => {
   )
 }
 
-export default Button
+export default Button;

@@ -11,7 +11,8 @@ interface IFormInput {
 }
 
 type Props = {
-  setToggleForm: React.Dispatch<React.SetStateAction<Boolean>>
+  setToggleForm: React.Dispatch<React.SetStateAction<Boolean>>,
+  id: number
 };
 
 const formatEnumOption = (option: string) => {
@@ -44,7 +45,7 @@ const Form = (props: Props) => {
         <Controller
           name="title"
           control={control}
-          defaultValue=""
+          defaultValue={`${props.id}`}
           render={({ field }) => <Input {...field} />}
         />
 
@@ -75,7 +76,7 @@ const Form = (props: Props) => {
         <div style={{display: 'flex'}}>
           <Button type="submit">Submit</Button>
           <CancelButton type="button" onClick={()=> props.setToggleForm(false)}>Cancel</CancelButton>
-        </div>+
+        </div>
         
       </form>
     </FormWrapper>
